@@ -5093,6 +5093,151 @@ class FireStoreUtils {
     }
   }
 
+  static Future<Map<String, dynamic>?> sendLoginOtpForNumber({
+    required String userType,
+    required String mobileNumber,
+  }) async {
+    try {
+      final response = await http.post(
+        Uri.parse(
+          '${Constant.baseUrl}fm/auth/send-login-otp',
+        ),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': '*/*',
+        },
+        body: jsonEncode({
+          "userType": userType,
+          "mobileNumber": mobileNumber,
+        }),
+      );
+
+      debugPrint(
+        "Send OTP Status: ${response.statusCode}",
+      );
+
+      debugPrint(
+        "Send OTP Response: ${response.body}",
+      );
+
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body);
+      }
+
+      return {
+        "error": true,
+        "message":
+        "Failed to send OTP (${response.statusCode})",
+      };
+    } catch (e) {
+      debugPrint(
+        "Send OTP Error: $e",
+      );
+
+      return {
+        "error": true,
+        "message": e.toString(),
+      };
+    }
+  }
+
+  static Future<Map<String, dynamic>?> verifyLoginOtpForNumber({
+    required String userType,
+    required String mobileNumber,
+    required String otp,
+  }) async {
+    try {
+      final response = await http.post(
+        Uri.parse(
+          '${Constant.baseUrl}fm/auth/verify-login-otp',
+        ),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': '*/*',
+        },
+        body: jsonEncode({
+          "userType": userType,
+          "mobileNumber": mobileNumber,
+          "otp": otp,
+        }),
+      );
+
+      debugPrint(
+        "Verify OTP Status: ${response.statusCode}",
+      );
+
+      debugPrint(
+        "Verify OTP Response: ${response.body}",
+      );
+
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body);
+      }
+
+      return {
+        "error": true,
+        "message":
+        "Invalid OTP (${response.statusCode})",
+      };
+    } catch (e) {
+      debugPrint(
+        "Verify OTP Error: $e",
+      );
+
+      return {
+        "error": true,
+        "message": e.toString(),
+      };
+    }
+  }
+
+  static Future<Map<String, dynamic>?> resendLoginOtpForNumber({
+    required String userType,
+    required String mobileNumber,
+  }) async {
+    try {
+      final response = await http.post(
+        Uri.parse(
+          '${Constant.baseUrl}fm/auth/resend-login-otp',
+        ),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': '*/*',
+        },
+        body: jsonEncode({
+          "userType": userType,
+          "mobileNumber": mobileNumber,
+        }),
+      );
+
+      debugPrint(
+        "Resend OTP Status: ${response.statusCode}",
+      );
+
+      debugPrint(
+        "Resend OTP Response: ${response.body}",
+      );
+
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body);
+      }
+
+      return {
+        "error": true,
+        "message":
+        "Failed to resend OTP (${response.statusCode})",
+      };
+    } catch (e) {
+      debugPrint(
+        "Resend OTP Error: $e",
+      );
+
+      return {
+        "error": true,
+        "message": e.toString(),
+      };
+    }
+  }
 
 
 }

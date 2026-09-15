@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:jippymart_restaurant/app/auth_screen/screens/phone_number_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:jippymart_restaurant/app/auth_screen/screens/signup_screen.dart';
 import 'package:jippymart_restaurant/app/forgot_password_screen/forgot_password_screen.dart';
@@ -13,6 +14,7 @@ import 'package:jippymart_restaurant/themes/text_field_widget.dart';
 import 'package:jippymart_restaurant/utils/dark_theme_provider.dart';
 
 import '../../terms_and_condition/terms_and_condition_screen.dart';
+import 'email_verification_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -41,7 +43,7 @@ class LoginScreen extends StatelessWidget {
                   crossAxisAlignment:
                   CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
 
                     Text(
                       'Restaurant Partner Login'.tr,
@@ -70,7 +72,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
 
-                    const SizedBox(height: 32),
+                    const SizedBox(height: 20),
 
 // Username
                     TextFieldWidget(
@@ -94,7 +96,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
 
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 10),
 
 // Password
                     Obx(
@@ -152,7 +154,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
 
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 10),
 
 // Forgot password
                     Align(
@@ -200,7 +202,81 @@ class LoginScreen extends StatelessWidget {
                             .loginWithUserNameAndPassword,
                       ),
                     ),
+                    const SizedBox(height: 24),
 
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Divider(
+                            color: themeChange.getThem()
+                                ? AppThemeData.grey700
+                                : AppThemeData.grey300,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Text(
+                            "OR".tr,
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontFamily: AppThemeData.medium,
+                              color: themeChange.getThem()
+                                  ? AppThemeData.grey400
+                                  : AppThemeData.grey500,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Divider(
+                            color: themeChange.getThem()
+                                ? AppThemeData.grey700
+                                : AppThemeData.grey300,
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 24),
+
+                    OutlinedButton(
+                      onPressed: () {
+                        Get.to(
+                          const PhoneNumberScreen(),
+                        );
+                      },
+                      style: OutlinedButton.styleFrom(
+                        minimumSize: const Size(
+                          double.infinity,
+                          54,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(28),
+                        ),
+                        side:  BorderSide(
+                          color: AppThemeData.secondary300,
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.phone_android_outlined,
+                            color: AppThemeData.secondary300,
+                          ),
+
+                          const SizedBox(width: 10),
+
+                          Text(
+                            "Login with Mobile Number".tr,
+                            style: TextStyle(
+                              color: AppThemeData.secondary300,
+                              fontSize: 15,
+                              fontFamily: AppThemeData.medium,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     const SizedBox(height: 30),
                   ],
                 ),
@@ -244,7 +320,8 @@ class LoginScreen extends StatelessWidget {
                           TapGestureRecognizer()
                             ..onTap = () {
                               Get.to(
-                                const SignupScreen(),
+                                //const SignupScreen(),
+                                const EmailVerificationScreen()
                               );
                             },
                           style: TextStyle(

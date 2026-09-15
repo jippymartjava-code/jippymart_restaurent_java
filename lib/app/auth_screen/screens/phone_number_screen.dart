@@ -191,3 +191,133 @@
 //         });
 //   }
 // }
+
+
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:jippymart_restaurant/controller/phone_number_controller.dart';
+import 'package:jippymart_restaurant/themes/app_them_data.dart';
+import 'package:jippymart_restaurant/themes/round_button_fill.dart';
+import 'package:jippymart_restaurant/themes/text_field_widget.dart';
+import 'package:jippymart_restaurant/utils/dark_theme_provider.dart';
+import 'package:provider/provider.dart';
+
+class PhoneNumberScreen extends StatelessWidget {
+  const PhoneNumberScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final themeChange = Provider.of<DarkThemeProvider>(context);
+
+    return GetX<PhoneNumberController>(
+      init: PhoneNumberController(),
+      builder: (controller) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: themeChange.getThem()
+                ? AppThemeData.surfaceDark
+                : AppThemeData.surface,
+            elevation: 0,
+          ),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 10,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Login with Mobile Number".tr,
+                  style: TextStyle(
+                    color: themeChange.getThem()
+                        ? AppThemeData.grey50
+                        : AppThemeData.grey900,
+                    fontSize: 22,
+                    fontFamily: AppThemeData.semiBold,
+                  ),
+                ),
+
+                const SizedBox(height: 8),
+
+                Text(
+                  "Enter your mobile number to receive a verification code."
+                      .tr,
+                  style: TextStyle(
+                    color: themeChange.getThem()
+                        ? AppThemeData.grey400
+                        : AppThemeData.grey500,
+                    fontSize: 16,
+                    fontFamily: AppThemeData.regular,
+                  ),
+                ),
+
+                const SizedBox(height: 32),
+
+                TextFieldWidget(
+                  title: 'Mobile Number'.tr,
+                  controller:
+                  controller.phoneNUmberEditingController.value,
+                  hintText: 'Enter Mobile Number'.tr,
+                  textInputType: const TextInputType.numberWithOptions(
+                    signed: false,
+                    decimal: false,
+                  ),
+                  textInputAction: TextInputAction.done,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(
+                      RegExp('[0-9]'),
+                    ),
+                    LengthLimitingTextInputFormatter(10),
+                  ],
+                  prefix: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Text(
+                          '🇮🇳',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+
+                        const SizedBox(width: 4),
+
+                        Text(
+                          '+91',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: themeChange.getThem()
+                                ? AppThemeData.grey50
+                                : AppThemeData.grey900,
+                            fontFamily: AppThemeData.medium,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 36),
+
+                RoundedButtonFill(
+                  title: "Send OTP".tr,
+                  color: AppThemeData.secondary300,
+                  textColor: AppThemeData.grey50,
+                  onPress: () async {
+                    await controller.sendLoginOtp();
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
